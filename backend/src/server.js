@@ -7,9 +7,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(bodyParser.json());
 const mongoose = require('mongoose');
-
+const mongodbpath="mongodb+srv://Jatin:admin@cluster0.n3btd0y.mongodb.net/?retryWrites=true&w=majority";
 const Note=require("./models/Note");
-mongoose.connect("mongodb+srv://Jatin:admin@cluster0.n3btd0y.mongodb.net/?retryWrites=true&w=majority").then(function(){
+mongoose.connect(mongodbpath).then(function(){
 
 app.get("/",function(req,res){
     const response={message:"API working"};
@@ -24,7 +24,7 @@ app.use("/notes",noteRouter);  // /notes/notes.add
 });
 // home route
 
-
-app.listen(5000,function(){
-    console.log("Server Started");
+const PORT=process.env.PORT || 5000
+app.listen(PORT,function(){
+    console.log("Server Started at PORT : "+ PORT);
 });
