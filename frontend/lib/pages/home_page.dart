@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         child: Text("No Notes Yet"),
       ),
       
-      ): Center(
+      ): const Center(
         child: CircularProgressIndicator(),
       ),
       floatingActionButton: FloatingActionButton(
