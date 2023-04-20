@@ -1,36 +1,25 @@
 const express= require('express');
 const app=express();
+const bodyParser=require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+// if true we can give nested objects
+// else cannot
 
+app.use(bodyParser.json());
 const mongoose = require('mongoose');
 
 const Note=require("./models/Note");
 mongoose.connect("mongodb+srv://Jatin:admin@cluster0.n3btd0y.mongodb.net/?retryWrites=true&w=majority").then(function(){
 
 app.get("/",function(req,res){
-    res.send("This is a changes");
+    const response={message:"API working"};
+    res.json(response);
 
 });
 
 // notes route
-
-app.get("/notes/list",async function(req,res){
-    var notes=await Note.find();
-    res.json(notes);
-});
-
-app.get("/notes/add",async function(req,res){
-    const newNote=new Note({
-        id: "0002",
-        userid: "usedid",
-        title: "First Note",
-        content: "This is my content"
-    });
-
-    await newNote.save();
-
-    const response=  {message : "new note created"};
-    res.json(response);
-});
+const noteRouter=require('./routes/Note');
+app.use("/notes",noteRouter);  // /notes/notes.add
 
 });
 // home route
